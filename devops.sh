@@ -226,12 +226,13 @@ case "$1" in
     ;;
 
   "deploy")
+    _kubectl create namespace $KUBE_NAMESPACE || true
     helm upgrade \
       --kube-context $KUBE_CONTEXT \
       $RELEASE $chartPath \
       --install \
       --namespace $KUBE_NAMESPACE \
-      $configVals \
+      $HELM_DEPLOY_PARAMS \
       --set image.tag=$(imageTag) \
       --set image.repository=$IMAGE_REGISTRY \
       --set defaultDnsDomain=$DEFAULT_DNS_DOMAIN \
