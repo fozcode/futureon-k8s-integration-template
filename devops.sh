@@ -226,7 +226,8 @@ case "$1" in
     ;;
 
   "deploy")
-    _kubectl create namespace $KUBE_NAMESPACE || true
+    # be sure to create namespace first
+    kubectl --context $KUBE_CONTEXT create namespace $KUBE_NAMESPACE || true
     helm upgrade \
       --kube-context $KUBE_CONTEXT \
       $RELEASE $chartPath \
